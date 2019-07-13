@@ -43,6 +43,10 @@ class Config:
     def get_float_value(self, key, context):
         return float(self.get_value(key, context))
 
+    def get_bool_value(self, key, context):
+        value = self.get_value(key, context)
+        return str(value).lower() in ("yes", "true", "t", "1")
+
 
 def check_config(func, key, context=None):
     value = func(key, context)
@@ -74,6 +78,14 @@ def main():
 
     check_config(config.get_int_value, 'key_for_int')
     check_config(config.get_float_value, 'key_for_float')
+    check_config(config.get_bool_value, 'key_for_bool_true')
+    check_config(config.get_bool_value, 'key_for_bool_yes')
+    check_config(config.get_bool_value, 'key_for_bool_t')
+    check_config(config.get_bool_value, 'key_for_bool_1')
+    check_config(config.get_bool_value, 'key_for_bool_false')
+    check_config(config.get_bool_value, 'key_for_bool_no')
+    check_config(config.get_bool_value, 'key_for_bool_f')
+    check_config(config.get_bool_value, 'key_for_bool_0')
 
 
 if __name__ == '__main__':

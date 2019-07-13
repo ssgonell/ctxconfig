@@ -40,3 +40,11 @@ key3,prod,,,,value_for_prod
 key3,,,,,value_for_default
 key_for_int,,,,,123
 key_for_float,,,,,123.45
+key_for_bool_true,,,,,true
+key_for_bool_false,,,,,false
+key_for_bool_yes,,,,,yes
+key_for_bool_no,,,,,no
+key_for_bool_t,,,,,T
+key_for_bool_f,,,,,f
+key_for_bool_1,,,,,1
+key_for_bool_0,,,,,0
