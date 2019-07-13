@@ -53,6 +53,7 @@ def main():
     config = Config('config_data.csv')
     keys = ['key1', 'key2', 'key3']
     contexts = [
+        None,
         Context(),
         Context('dev'),
         Context('dev', 'app1'),
@@ -71,8 +72,8 @@ def main():
         for context in contexts:
             check_config(config.get_value, key, context)
 
-    check_config(config.get_int_value, 'key_for_int', Context('dev'))
-    check_config(config.get_float_value, 'key_for_float', Context('dev'))
+    check_config(config.get_int_value, 'key_for_int')
+    check_config(config.get_float_value, 'key_for_float')
 
 
 if __name__ == '__main__':
