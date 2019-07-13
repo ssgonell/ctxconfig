@@ -18,8 +18,8 @@ class Config:
         self._df.set_index('key', inplace=True)
         print(self._df.to_string())
 
-    def get_value(self, key, context):
-        c = context
+    def get_value(self, key, context=None):
+        c = context or Context()
         df = self._df.loc[key]
         result = df.loc[(df['env'] == c.env) & (df['app'] == c.app) & (df['user'] == c.user) & (df['machine'] == c.machine)]
         if len(result) == 1:
@@ -37,9 +37,15 @@ class Config:
         if len(result) == 1:
             return result['value'].values[0]
 
+    def get_int_value(self, key, context):
+        return int(self.get_value(key, context))
 
-def check_config(config, key, context):
-    value = config.get_value(key, context)
+    def get_float_value(self, key, context):
+        return float(self.get_value(key, context))
+
+
+def check_config(func, key, context=None):
+    value = func(key, context)
     print(f'{key} = {value} for context: {context}')
 
 
@@ -63,7 +69,10 @@ def main():
     ]
     for key in keys:
         for context in contexts:
-            check_config(config, key, context)
+            check_config(config.get_value, key, context)
+
+    check_config(config.get_int_value, 'key_for_int', Context('dev'))
+    check_config(config.get_float_value, 'key_for_float', Context('dev'))
 
 
 if __name__ == '__main__':
