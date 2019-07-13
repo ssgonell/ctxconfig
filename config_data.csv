@@ -1,0 +1,14 @@
+key,env,app,user,machine,value
+key1,dev,app1,user1,machine1,value_for_dev_app1_user1_machine1
+key1,prod,app1,user1,machine1,value_for_prod_app1_user1_machine1
+key1,dev,app1,,machine1,value_for_dev_app1_machine1
+key1,prod,app1,,machine1,value_for_prod_app1_machine1
+key1,dev,app1,user1,,value_for_dev_app1_user1
+key1,prod,app1,user1,,value_for_prod_app1_user1
+key1,dev,,user1,,value_for_dev_user1
+key1,prod,,user1,,value_for_prod_user1
+key1,dev,app1,,,value_for_dev_app1
+key1,prod,app1,,,value_for_prod_app1
+key1,dev,,,,value_for_dev
+key1,prod,,,,value_for_prod
+key1,,,,,value_for_default
