@@ -48,11 +48,6 @@ class Config:
         return str(value).lower() in ("yes", "true", "t", "1")
 
 
-def check_config(func, key, context=None):
-    value = func(key, context)
-    print(f'{key} = {value} for context: {context}')
-
-
 def main():
     config = Config('config_data.csv')
     keys = ['key1', 'key2', 'key3']
@@ -72,6 +67,11 @@ def main():
         Context('prod', 'app1', machine='machine1'),
         Context('prod', 'app1', 'user1', 'machine1')
     ]
+
+    def check_config(func, key, context=None):
+        value = func(key, context)
+        print(f'{key} = {value} for context: {context}')
+
     for key in keys:
         for context in contexts:
             check_config(config.get_value, key, context)
