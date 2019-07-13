@@ -40,5 +40,3 @@ key3,prod,,,,value_for_prod
 key3,,,,,value_for_default
 key_for_int,,,,,123
 key_for_float,,,,,123.45
-key_for_int,dev,,,,123
-key_for_float,dev,,,,123.45

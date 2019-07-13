@@ -20,7 +20,7 @@ class Config:
 
     def get_value(self, key, context=None):
         c = context or Context()
-        df = self._df.loc[key]
+        df = self._df.loc[[key]]    # https://stackoverflow.com/a/20384317
         result = df.loc[(df['env'] == c.env) & (df['app'] == c.app) & (df['user'] == c.user) & (df['machine'] == c.machine)]
         if len(result) == 1:
             return result['value'].values[0]
