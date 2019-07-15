@@ -20,22 +20,25 @@ class Config:
 
     def get_value(self, key, context=None):
         c = context or Context()
-        df = self._df.loc[[key]]    # https://stackoverflow.com/a/20384317
-        result = df.loc[(df['env'] == c.env) & (df['app'] == c.app) & (df['user'] == c.user) & (df['machine'] == c.machine)]
-        if len(result) == 1:
-            return result['value'].values[0]
-        result = df.loc[(df['env'] == c.env) & (df['app'] == c.app) & (df['user'] == c.user)]
-        if len(result) == 1:
-            return result['value'].values[0]
-        result = df.loc[(df['env'] == c.env) & (df['app'] == c.app)]
-        if len(result) == 1:
-            return result['value'].values[0]
-        result = df.loc[(df['env'] == c.env)]
-        if len(result) == 1:
-            return result['value'].values[0]
-        result = df
-        if len(result) == 1:
-            return result['value'].values[0]
+        if key not in self._df.index:
+            raise KeyError(f'No config found for key = {key}, context = {context}')
+        try:
+            df: pd.DataFrame = self._df.loc[[key]]  # https://stackoverflow.com/a/20384317
+        except:
+            raise Exception(f'Error while finding config for key = {key}, context = {context}')
+
+        def check(hits):
+            if len(hits) == 1:
+                return hits['value'].values[0]
+
+        return check(df.loc[(df['env'] == c.env) & (df['app'] == c.app) & (df['user'] == c.user) & (df['machine'] == c.machine)]) or \
+               check(df.loc[(df['env'] == c.env) & (df['app'] == c.app) & (df['machine'] == c.machine)]) or \
+               check(df.loc[(df['env'] == c.env) & (df['app'] == c.app) & (df['user'] == c.user)]) or \
+               check(df.loc[(df['env'] == c.env) & (df['machine'] == c.machine)]) or \
+               check(df.loc[(df['env'] == c.env) & (df['user'] == c.user)]) or \
+               check(df.loc[(df['env'] == c.env) & (df['app'] == c.app)]) or \
+               check(df.loc[(df['env'] == c.env)]) or \
+               check(df)
 
     def get_int_value(self, key, context):
         return int(self.get_value(key, context))
